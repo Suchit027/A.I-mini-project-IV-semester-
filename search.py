@@ -30,7 +30,7 @@ def a_star(start: BoardInstance, goal: BoardInstance) -> list[BoardInstance]:
         priority_current, current = heappop(frontier)
         
         if current == goal:
-            break
+            return backtrack(current, prev)
 
         closed.add(current)
 
@@ -45,17 +45,4 @@ def a_star(start: BoardInstance, goal: BoardInstance) -> list[BoardInstance]:
                 priority = alt_dist + neighbor.manhattan_distance(goal)
                 heappush(frontier, (priority, neighbor)) 
 
-    return backtrack(current, prev)
-
-
-# TESTING
-if __name__ == "__main__":
-    goal_config = [[2, 3, 1], [None, 4, 5], [6, 7, 8]]
-    start_config = [[1, 2, 3], [None, 4, 6], [7, 5, 8]]
-
-    start = BoardInstance(start_config)
-    goal = BoardInstance(goal_config)
-
-    path = a_star(start, goal)
-    for b in path:
-        print(b)
+    return None
