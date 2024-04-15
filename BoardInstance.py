@@ -144,13 +144,3 @@ class BoardInstance:
             matrix_string += "\n"
 
         return line + "\n" + matrix_string + line
-    
-
-# Testing, might replace with unittests later
-if __name__ == "__main__":
-    start = BoardInstance.random(8)
-    print("RANDOM STATE", start, sep="\n")
-
-    print("NEIGHBORS")
-    for instance in start.neighbors():
-        print(instance)
