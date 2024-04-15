@@ -8,12 +8,16 @@ def backtrack(end: BoardInstance, prev: dict) -> list:
     Path goes from `start` to `end`, constructed using parents from `prev`.
     `start` is any node such that `prev[start] = None`.
     """
-    path = []
     current = end
+    path = []
+
     while prev[current]:
         path.append(current)
         current = prev[current]
+    
+    path.append(current)
     return path[::-1]
+
 
 def a_star(start: BoardInstance, goal: BoardInstance) -> list[BoardInstance]:
     """Return a list of BoardConfigurations from start to solved"""
