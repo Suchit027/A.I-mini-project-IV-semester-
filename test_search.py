@@ -17,11 +17,12 @@ def test_instance(start: BoardInstance, goal: BoardInstance, result_list: list):
 
 
 if __name__ == "__main__":
+    N = int(input("N: "))
     print_pretty = partial(print, sep="\n", end="\n\n")
 
     while True:
-        start = BoardInstance.random(8)
-        goal = BoardInstance.random(8)
+        start = BoardInstance.random(N)
+        goal = BoardInstance.random(N)
 
         print_pretty("START STATE", start)
         print_pretty("GOAL STATE", goal)
