@@ -92,6 +92,30 @@ class BoardInstance:
         return result
     
 
+    def is_reachable(self, other) -> bool:
+        """Returns True if there's any path at all from `other` to self.
+        https://math.stackexchange.com/questions/293527/how-to-check-if-a-8-puzzle-is-solvable
+        """
+        A = [element for row in self.matrix for element in row]
+
+        B = [element for row in other.matrix for element in row]
+        B_map = {B[i]: i for i in range(len(B))}
+
+        # count the number of inverted pairs in A from POV of B
+        inversions = 0
+        for i in range(len(A)):
+            if A[i] is None:
+                continue
+            for j in range(i + 1, len(A)):
+                if A[j] is None:
+                    continue
+                if B_map[A[j]] < B_map[A[i]]:
+                    inversions += 1
+
+        # solvable if there are an even number of inverted pairs
+        return inversions % 2 == 0
+
+
     def __hash__(self) -> int:
         """Return a hash value for the BoardInstance.
         Enables addition of BoardInstance objects to sets.
@@ -107,7 +131,7 @@ class BoardInstance:
 
     def __lt__(self, other) -> bool:
         return self.blank_position[0] < other.blank_position[0]
-
+    
     
     def __str__(self) -> str:
         """Return a string representation. Used by print()."""
@@ -125,7 +149,8 @@ class BoardInstance:
 # Testing, might replace with unittests later
 if __name__ == "__main__":
     start = BoardInstance.random(8)
-    print(start)
+    print("RANDOM STATE", start, sep="\n")
 
+    print("NEIGHBORS")
     for instance in start.neighbors():
         print(instance)
