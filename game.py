@@ -48,13 +48,17 @@ def display_state(current, goal, n_moves, n_hints):
 def main():
     N = int(input("N: "))
 
-    # Initialize the current and goal state
-    current = BoardInstance.random(N)
-    goal = BoardInstance.random(N)
+    difficulty = int(input("Difficulty [1|2|3]: "))
+    if difficulty == 1:
+        seed = 10
+    elif difficulty == 2:
+        seed = 25
+    else:
+        seed = 50
 
-    # WARNING: DONT FUCK WITH THIS LINE 💀💀
-    while not goal.is_reachable(current) or goal == current or a_star(current, goal) is None:
-        goal = BoardInstance.random(N)
+    # Initialize the current and goal state
+    goal = BoardInstance.random(N)
+    current = goal.drunk_walk(seed)
 
     best_path = a_star(current, goal)
 
@@ -75,8 +79,9 @@ def main():
     print(f"\nGoal state reached | {n_moves} moves | {n_hints} hints")
     print(f"\nBest path had {len(best_path) - 1} steps")
 
+    """print("BEST PATH")
     for state in best_path:
-        print(state)
+        print(state)"""
     
     i = input("\nPress Enter to continue... ")
 

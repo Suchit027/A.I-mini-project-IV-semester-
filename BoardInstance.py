@@ -1,3 +1,4 @@
+from __future__ import annotations
 import random
 import copy
 
@@ -12,7 +13,7 @@ class BoardInstance:
             matrix.
     """
 
-    def random(N):
+    def random(N: int) -> BoardInstance:
         """Returns a randomly-arranged BoardInstance for N-puzzle.
         Throws an Exception if (N + 1) is not a perfect-square.
         """
@@ -47,6 +48,14 @@ class BoardInstance:
         
         self.blank_position = blank_position
         self.matrix = matrix
+
+
+    def drunk_walk(self, n_steps: int) -> BoardInstance:
+        result = copy.deepcopy(self)
+        for _ in range(n_steps):
+            result = random.choice(list(result.neighbors()))
+        return result
+
 
     def neighbors(self) -> list:
         """Return a list of neighboring BoardInstance states."""
@@ -135,12 +144,14 @@ class BoardInstance:
     
     def __str__(self) -> str:
         """Return a string representation. Used by print()."""
-        line = "-" * (2 * len(self.matrix) - 1)
+        width = len(str(len(self.matrix)**2 - 1))
+        line = "-" * ((width + 1) * len(self.matrix) - 1)
         
         matrix_string = ""
         for row in self.matrix:
             for tile in row:
-                matrix_string += (str(tile) if tile is not None else " ") + " "
+                s = str(tile) if tile is not None else "_" * width
+                matrix_string += s + " " * (width - len(s) + 1)
             matrix_string += "\n"
 
         return line + "\n" + matrix_string + line
