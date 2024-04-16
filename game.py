@@ -73,6 +73,8 @@ def main():
         elif move in "awsd":
             if play(current, move): # modifies `current` in-place
                 n_moves += 1
+        elif move == "q":
+            return
 
         display_state(current, goal, n_moves, n_hints)
 
