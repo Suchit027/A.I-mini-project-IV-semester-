@@ -80,6 +80,8 @@ def main():
 
     print(f"\nGoal state reached | {n_moves} moves | {n_hints} hints")
     print(f"\nBest path had {len(best_path) - 1} steps")
+    score = round(100 * n_moves / (n_moves + len(best_path)), 2)
+    print(f"\nSCORE: {score}")
 
     """print("BEST PATH")
     for state in best_path:
